@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+button{
+  border: 1px solid black;
+}
+
+select {
+    max-width: 100%; /* Adjust as needed */
+  }
+  
+  /* Option styles with higher specificity */
+  select option {
+    width: 100%;
+    white-space: nowrap; /* Prevent text wrapping */
+    overflow: hidden; /* Hide overflowing text */
+    text-overflow: ellipsis; /* Add ellipsis (...) for long text */
+  }
