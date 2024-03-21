@@ -1,44 +1,16 @@
 import React, { useState } from 'react'
+import Modal from './Modal'
 
-const Employees = () => {
+const Employees = ({employees, setEmployees, formatDate}) => {
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [data, setData] = useState('')
 
 
-  // function for date time format
-
-  const formatDate = () => {
-    const options = {
-      day: 'numeric',
-      month: 'numeric',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-    }
-    return new Date().toLocaleDateString('en-GB' , options)
+  const handleEdit = (employee) => {
+    setIsEditModalOpen(true)
+    setData(employee)
   }
 
-  const [employees, setEmployees] = useState([
-    {
-      id: 1,
-      name: 'Ahmed Ayaz',
-      role: 'Admin',
-      createdAt : formatDate(),
-      updatedAt: formatDate()
-    },
-    {
-      id: 2,
-      name: 'Nouman Afzal',
-      role: 'Supervisor',
-      createdAt : formatDate(),
-      updatedAt: formatDate()
-    },
-    {
-      id: 3,
-      name: 'Araib Khan',
-      role: 'Supervisor',
-      createdAt : formatDate(),
-      updatedAt: formatDate()
-    },
-  ])
 
   return (
     <>
@@ -64,8 +36,8 @@ const Employees = () => {
             </div>
           </div>
         {
-          employees.map((employee) => {
-            return <div className='flex py-[15px] items-center'>
+          employees.map((employee, index) => {
+            return <div className='flex py-[15px] items-center' key={index}>
               <div className='w-[60px]'>
                 {employee.id}
               </div>
@@ -82,13 +54,23 @@ const Employees = () => {
                 {employee.updatedAt}
               </div>
               <div className='flex gap-[20px] justify-end w-[300px]'>
-                <button className='px-[10px] py-[7px] w-[90px] bg-blue-500 rounded-lg'>Edit</button>
-                <button className='px-[10px] py-[7px] w-[90px] bg-red-500 rounded-lg'>Delete</button>
+                <button className='px-[10px] py-[7px] w-[90px] bg-blue-500 rounded-lg' onClick={() => handleEdit(employee)}>Edit</button>
+                <button className='px-[10px] py-[7px] w-[90px] bg-red-500 rounded-lg' onClick={() => setIsEditModalOpen(true)}>Delete</button>
               </div>
             </div>
           })
         }
       </div>
+      {
+        isEditModalOpen && 
+        <Modal 
+          purpose={"Edit"}
+          setIsModalOpen={setIsEditModalOpen}
+          setEmployees={setEmployees} 
+          data={data}
+          formatDate={formatDate}
+        />
+      }
     </>
   )
 }
